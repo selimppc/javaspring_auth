@@ -1,9 +1,7 @@
 package com.security.auth.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,10 +15,11 @@ import org.springframework.stereotype.Indexed;
 public class Role {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     private String name;
-    public Role(String id, String name) {
+    public Role(int id, String name) {
         this.id = id;
         this.name = name;
     }

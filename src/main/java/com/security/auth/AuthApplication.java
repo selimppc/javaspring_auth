@@ -27,11 +27,9 @@ public class AuthApplication implements CommandLineRunner {
 		try {
 			if (roleRepository.findAll().isEmpty()) {
 				Role role = new Role();
-				role.setId("1");
 				role.setName(ERole.ROLE_EMPLOYEE.name());
 				roleRepository.save(role);
 				Role role2 = new Role();
-				role2.setId("2");
 				role2.setName(ERole.ROLE_ADMIN.name());
 				roleRepository.save(role2);
 			}

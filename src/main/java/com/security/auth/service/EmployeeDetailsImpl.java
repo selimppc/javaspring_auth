@@ -20,7 +20,7 @@ public class EmployeeDetailsImpl implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private int id;
 
     private String username;
 
@@ -32,7 +32,7 @@ public class EmployeeDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public EmployeeDetailsImpl(
-            String id,
+            int id,
             String username,
             String email,
             String password,
@@ -67,7 +67,7 @@ public class EmployeeDetailsImpl implements UserDetails {
         return authorities;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

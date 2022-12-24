@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,16 +47,13 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateEmployee
-            (@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateEmployee(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken
-                        (loginRequest.getUsername(),
-                                loginRequest.getPassword()));
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext()
-                .setAuthentication(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         EmployeeDetailsImpl employeeDetails = (EmployeeDetailsImpl)
@@ -73,28 +69,18 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser
-            (@RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
 
-        if (employeeRepository.existsByUsername
-                (signUpRequest.getUsername())) {
-
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse
-                            ("Error: username is already taken!"));
+        if (employeeRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: username is already taken!"));
         }
 
-        if (employeeRepository
-                .existsByEmail(signUpRequest.getEmail())) {
-
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse
-                            ("Error: Email is already in use!"));
+        if (employeeRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new employee account
         Employee employee = new Employee(
-                "11111",
                 signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()),
@@ -105,36 +91,32 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role employeeRole = roleRepository
-                    .findByName(String.valueOf(ERole.ROLE_EMPLOYEE))
-                    .orElseThrow(() -> new RuntimeException
-                            ("Error: Role is not found."));
-            roles.add(employeeRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository
-                                .findByName(String.valueOf(ERole.ROLE_ADMIN))
-                                .orElseThrow(() -> new RuntimeException
-                                        ("Error: Role is not found."));
-                        roles.add(adminRole);
 
-                        break;
-                    default:
-                        Role defaultRole = roleRepository
-                                .findByName(String.valueOf(ERole.ROLE_EMPLOYEE))
-                                .orElseThrow(() -> new RuntimeException
-                                        ("Error: Role is not found."));
-                        roles.add(defaultRole);
+            Role employeeRole = roleRepository.findByName(String.valueOf(ERole.ROLE_EMPLOYEE))
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(employeeRole);
+
+        } else {
+
+            strRoles.forEach(role -> {
+
+                if (role.equals("admin")) {
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.name())
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(adminRole);
+                } else {
+                    Role defaultRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE.name())
+                            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    roles.add(defaultRole);
                 }
+
             });
         }
 
         employee.setRoles(roles);
         employeeRepository.save(employee);
 
-        return ResponseEntity.ok(new MessageResponse
-                ("Employee registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Employee registered successfully!"));
     }
+
 }

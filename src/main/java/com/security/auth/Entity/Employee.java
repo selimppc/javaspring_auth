@@ -16,7 +16,8 @@ import java.util.Set;
 @Table(name = "employees")
 public class Employee {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     private String username;
 
@@ -33,8 +34,8 @@ public class Employee {
     )
     private Set<Role> roles = new HashSet<>();
 
-    public Employee(String id, String username, String email, String password, Set<Role> roles) {
-        this.id = id;
+    public Employee(String username, String email, String password, Set<Role> roles) {
+        //this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

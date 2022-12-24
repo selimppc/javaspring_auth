@@ -44,8 +44,7 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
 
-        EmployeeDetailsImpl employeePrincipal =
-                (EmployeeDetailsImpl) authentication.getPrincipal();
+        EmployeeDetailsImpl employeePrincipal = (EmployeeDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((employeePrincipal.getUsername()))
