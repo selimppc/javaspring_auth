@@ -7,8 +7,8 @@
 |---------------|-------------|---------------|
 | signup        | POST        | 200           |
 | signin        | POST        | 200           |
-| test employee | PATCH / PUT | 200           |
-| test admin    | DELETE      | 200           |
+| test employee | GET         | 200           |
+| test admin    | GET         | 200           |
 
 Note: postman collection is attached here "Spring-Boot-Auth.postman_collection.json"
 
