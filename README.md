@@ -10,6 +10,7 @@
 | test employee | PATCH / PUT | 200           |
 | test admin    | DELETE      | 200           |
 
+Note: postman collection is attached here "Spring-Boot-Auth.postman_collection.json"
 
 
 ### API URLS 
@@ -25,6 +26,10 @@
 
     = For Test Admin = 
     http://localhost:8080/api/test/admin
+
+
+    Postman Collection is attached here 
+    find the file in root directory : "Spring-Boot-Auth.postman_collection.json"
 
 
 
