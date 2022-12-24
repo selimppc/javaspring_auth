@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "3f387d73-6ab0-4e4d-b546-9e4f4d78385a",
+		"name": "Spring-Boot-Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8365408"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"beta\",\n    \"email\": \"beta@selimreza.com\",\n    \"password\": \"beta1234\",\n    \"roles\": [\"employee\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup ADMIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"email\": \"admin@selimreza.com\",\n    \"password\": \"admin1234\",\n    \"roles\": [\"admin\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"beta\",\n    \"password\": \"beta1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin ADMIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Employee",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiZXRhIiwiaWF0IjoxNjcxODYyNzUyLCJleHAiOjE2NzE5MzkwNTJ9.ZxTsd74cUg2yW1lJJV8lQlvXXxXcYVrNClOXUsplQBHSf77dczIUsEz2O-0G6NAJ9Kvid5tL-G-mj-ODA2JYqQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/test/employee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test",
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test Admin",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MTg2Mjc4NiwiZXhwIjoxNjcxOTM5MDg2fQ.H4_WDrhtdegtTPADHmj02cLjxjgqh4Qzc08gHbfhwJitNS3_GptTV3Ylgj_st9Z2QYGtsq1a360nhW6kVPa4DA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/test/admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"test",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

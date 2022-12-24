@@ -1,6 +1,6 @@
 package com.security.auth.utils;
 
-import com.security.auth.service.EmployeeDetailsImpl;
+import com.security.auth.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,17 +44,17 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
 
-        EmployeeDetailsImpl employeePrincipal = (EmployeeDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
-                .setSubject((employeePrincipal.getUsername()))
+                .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime()+ jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
 
-    public String getEmployeeUsernameFromJwtToken(String token) {
+    public String getUserUsernameFromJwtToken(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

@@ -2,15 +2,15 @@ package com.security.auth.controller;
 
 
 import com.security.auth.Entity.ERole;
-import com.security.auth.Entity.Employee;
+import com.security.auth.Entity.User;
 import com.security.auth.Entity.Role;
-import com.security.auth.repository.EmployeeRepository;
+import com.security.auth.repository.UserRepository;
 import com.security.auth.repository.RoleRepository;
 import com.security.auth.request.LoginRequest;
 import com.security.auth.request.SignupRequest;
 import com.security.auth.response.JwtResponse;
 import com.security.auth.response.MessageResponse;
-import com.security.auth.service.EmployeeDetailsImpl;
+import com.security.auth.service.UserDetailsImpl;
 import com.security.auth.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class AuthController {
     AuthenticationManager authenticationManager;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -47,7 +47,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateEmployee(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
@@ -56,31 +56,35 @@ public class AuthController {
 
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        EmployeeDetailsImpl employeeDetails = (EmployeeDetailsImpl)
+        UserDetailsImpl userDetails = (UserDetailsImpl)
                 authentication.getPrincipal();
-        List<String> roles = employeeDetails.getAuthorities()
+        List<String> roles = userDetails.getAuthorities()
                 .stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                employeeDetails.getId(),
-                employeeDetails.getUsername(),
-                employeeDetails.getEmail(), roles));
+        return ResponseEntity.ok(new JwtResponse(
+                jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles
+                )
+        );
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
 
-        if (employeeRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: username is already taken!"));
         }
 
-        if (employeeRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new employee account
-        Employee employee = new Employee(
+        User employee = new User(
                 signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()),
@@ -114,7 +118,7 @@ public class AuthController {
         }
 
         employee.setRoles(roles);
-        employeeRepository.save(employee);
+        userRepository.save(employee);
 
         return ResponseEntity.ok(new MessageResponse("Employee registered successfully!"));
     }

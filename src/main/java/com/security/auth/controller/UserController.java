@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 4800)
 @RestController
 @RequestMapping("/api/test")
-public class EmployeeController {
+public class UserController {
 
     @GetMapping("/all")
     public MessageResponse allAccess() {

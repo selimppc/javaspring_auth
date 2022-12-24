@@ -13,8 +13,8 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "employees")
-public class Employee {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -28,13 +28,13 @@ public class Employee {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "employees_roles",
-            joinColumns = @JoinColumn(name = "employee_id"),
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    public Employee(String username, String email, String password, Set<Role> roles) {
+    public User(String username, String email, String password, Set<Role> roles) {
         //this.id = id;
         this.username = username;
         this.email = email;

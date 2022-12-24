@@ -1,6 +1,6 @@
 package com.security.auth.repository;
 
-import com.security.auth.Entity.Employee;
+import com.security.auth.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Repository
 @EnableJpaRepositories
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    Optional<Employee> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
     Boolean existsByUsername(String username);
 

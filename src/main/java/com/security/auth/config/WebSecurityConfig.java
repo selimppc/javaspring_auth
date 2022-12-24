@@ -3,7 +3,7 @@ package com.security.auth.config;
 
 import com.security.auth.filter.AuthEntryPointJwt;
 import com.security.auth.filter.AuthTokenFilter;
-import com.security.auth.service.EmployeeDetailsServiceImpl;
+import com.security.auth.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ public class WebSecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
-    EmployeeDetailsServiceImpl employeeDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)

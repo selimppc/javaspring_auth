@@ -21,7 +21,7 @@ public class AuthApplication implements CommandLineRunner {
 
 
 	/* Add some rows into roles collection
-	 * before assigning any role to Employee. */
+	 * before assigning any role to user. */
 	@Override
 	public void run(String... args) throws Exception {
 		try {

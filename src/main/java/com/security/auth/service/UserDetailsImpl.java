@@ -1,7 +1,7 @@
 package com.security.auth.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.security.auth.Entity.Employee;
+import com.security.auth.Entity.User;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @NoArgsConstructor
-public class EmployeeDetailsImpl implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class EmployeeDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public EmployeeDetailsImpl(
+    public UserDetailsImpl(
             int id,
             String username,
             String email,
@@ -45,14 +45,14 @@ public class EmployeeDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static EmployeeDetailsImpl build(Employee user) {
+    public static UserDetailsImpl build(User user) {
 
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority
                         (role.getName()))
                 .collect(Collectors.toList());
 
-        return new EmployeeDetailsImpl(
+        return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
@@ -111,7 +111,7 @@ public class EmployeeDetailsImpl implements UserDetails {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        EmployeeDetailsImpl user = (EmployeeDetailsImpl) o;
+        UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
     }
 
